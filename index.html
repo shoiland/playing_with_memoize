@@ -1,0 +1,63 @@
+<!doctype html>
+
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<div id = "myContent">Multiply these numbers</div>
+	<input class = "num1" type = "number" name = "num1">
+	<input class = "num2" type = "number" name = "num2"> 
+	<button class = "run">Run Function</button>
+	<p class = "calculationOutput">Result</p>
+	<input class = "memo" type = "text">
+	<button class = "runMemo">Run Memo</button>
+	<div class = "multiplyResult">List result</div>
+
+	<script>
+
+	$(document).ready(function(){
+
+		function multiplyArgs(x, y){
+			var result = x * y; 
+			$('.calculationOutput').html(result);
+		}
+
+		function multiply(listOfNum){
+			var inputArray = listOfNum.split(',')
+			var argumentsArray = []; 
+			for(var i = 0; i < inputArray.length; i++){
+				argumentsArray.push(parseInt(inputArray[i])); 
+			}
+			var result =  argumentsArray.reduce(function(total, num){
+				return total *= num; 
+			}); 
+			$('.multiplyResult').html(result);
+		}
+
+		function memoize(){
+			var cache = {}; 
+      		return function(){
+        		var item = JSON.stringify(arguments);
+        		if(!cache[item]){
+        			console.log('computing')
+          			cache[item] = func.apply(this, arguments); 
+        		} 
+        	return cache[item]; 
+			}
+		}
+
+		$(".run").on("click", function(){
+				multiplyArgs(parseInt($('.num1').val()), parseInt($('.num2').val())); 
+			});
+
+		$(".runMemo").on("click", function(){
+				multiply($('.memo').val()); 
+			});
+
+
+	});
+	</script>
+
+</body>
+
+</html>
