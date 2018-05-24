@@ -17,10 +17,10 @@
 
 	$(document).ready(function(){
 
-		function multiplyArgs(x, y){
-			var result = x * y; 
-			$('.calculationOutput').html(result);
-		}
+		// function multiplyArgs(x, y){
+		// 	var result = x * y; 
+		// 	$('.calculationOutput').html(result);
+		// }
 
 		function multiply(listOfNum){
 			var inputArray = listOfNum.split(',')
@@ -32,17 +32,19 @@
 				return total *= num; 
 			}); 
 			$('.multiplyResult').html(result);
+			return result; 
 		}
 
-		function memoize(){
+		function memoize(func){
 			var cache = {}; 
       		return function(){
         		var item = JSON.stringify(arguments);
         		if(!cache[item]){
         			console.log('computing')
           			cache[item] = func.apply(this, arguments); 
-        		} 
-        	return cache[item]; 
+        		}
+        		
+        	$('.multiplyResult').html(cache[item]); 
 			}
 		}
 
@@ -50,8 +52,10 @@
 				multiplyArgs(parseInt($('.num1').val()), parseInt($('.num2').val())); 
 			});
 
+		var newMult = memoize(multiply);
+
 		$(".runMemo").on("click", function(){
-				multiply($('.memo').val()); 
+				newMult($('.memo').val()); 
 			});
 
 
