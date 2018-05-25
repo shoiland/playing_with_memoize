@@ -52,6 +52,8 @@
 				multiplyArgs(parseInt($('.num1').val()), parseInt($('.num2').val())); 
 			});
 
+
+		//Good way to think about memoize is that it is just taking multiple and creating a new function with its capabilities.  Only difference it is introducing a closure for us to reference (the cache).  It needs to be assigned to a variable in order for us to run it
 		var newMult = memoize(multiply);
 
 		$(".runMemo").on("click", function(){
